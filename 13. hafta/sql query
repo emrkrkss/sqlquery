@@ -1,0 +1,39 @@
+--Soru 1: En yüksek ve en düşük maaşları, toplamı ve ortalaması:
+
+Select Max(salary), Min(Salary), Sum(Salary), Round(AVG(salary),0) from employees e
+
+
+
+
+--2: Her departmanın en yüksek,düşük ve ortalama maaşı:
+
+Select e.department_ıd,
+round(Max(salary),0) "En yüksek maaş", 
+Round(AVG(salary),0)"Ortalama maaş" from employees e
+group by e.department_id
+
+
+--Soru 3: Yönetici olan departmanların maaş farkı 3000'den büyük olanlar:
+Select e.manager_id, min(salary)
+from employees e
+where e.manager_id ıs not null
+group by e.manager_id having max(salary)-min(salary)>3000 order by min(salary) desc 
+
+
+--Soru 4: Belli meslekler maaş hariç ortalaması 10000'den büyük olanlar:
+
+Select e.job_id, avg(salary)
+from employees e, jobs j
+where j.job_id != 'MK_MAN' and j.job_id != 'MK_REP' and j.job_id != 'ADD_AST' --where e.job_id not in ('MK_MAN', 'MK_REP', 'ADD_AST') Bu da olabilir
+and e.job_id=j.job_id
+group by j.job_id having avg(salary)>10000 order by avg(salary)
+
+--Soru5: Employees tablosundaki bölüm sayısını bulalım. 
+
+select count(distinct(department_id)) from employees e 
+
+--Soru6: Employees tablosundaki isimlerde en çok hangi harfle başlamıştır. 
+select substr(e.first_name, 1,1) "En çok tekrar eden harf" 
+from employees e group by substr(e.first_name, 1,1) 
+having count (*)=(select max(count(*)) from employees e group by substr(e.first_name, 1,1))  
+
