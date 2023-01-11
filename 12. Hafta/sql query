@@ -1,0 +1,56 @@
+Soru 1: En düşük maaşlı çalışanın çalıştığı deparman
+
+Select e.first_name, e.last_name, d.department_name,e.salary
+from departments d, employees e
+where d.department_id=e.department_id
+group by e.first_name,e.last_name,d.department_name,e.salary
+having salary=(select min(salary)
+                        from employees e)
+
+
+
+
+Soru 2: Maaşı ortalama maaştan yüksek olan çalışanlar:
+
+Select e.first_name, e.last_name, d.department_name,e.salary
+from departments d, employees e
+where d.department_id=e.department_id
+group by e.first_name,e.last_name,d.department_name,e.salary
+having salary>(select avg(salary)
+                        from employees e)
+
+
+Soru 3: En yüksek maaşı alan çalışan
+
+
+Select e.first_name, e.last_name, d.department_name,e.salary,j.job_title
+from departments d, employees e, jobs j
+where d.department_id=e.department_id and j.job_ıd=e.job_ıd
+group by e.first_name,e.last_name,d.department_name,e.salary,j.job_title
+having salary=(select max(salary)
+                        from employees e)
+
+
+
+Soru 4: Maaşı ortalamadan düşük olan çalışan sayısı:
+
+Select Count(*)
+from employees e
+where salary<(select avg(salary)
+                        from employees e)
+
+
+
+
+Soru 5: En çok çalışanı olan job_title:
+
+
+
+
+
+
+
+Soru 6:Clerk olup en son işe giren:
+Select e.first_name, e.last_name, e.hire_date
+from employees e
+where e.hire_date=(Select max(e.hire_date) from employees e where e.job_id=any(select e.job_id from jobs j where j.job_title like '%Clerk%'))
