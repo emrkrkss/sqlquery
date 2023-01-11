@@ -1,25 +1,22 @@
-1.Soru:
+1.Soru: Her meslek grubunda kaç kişi çalışıyor. 
 
 Select e.job_id, Count(*)
 from employees e
 group by e.job_id
 
-2.Soru:
-
+2.Soru: Her job_title'da çalışan kaç kişi vardır.
 Select j.job_title, Count(*)
 from jobs j, employees e
 where e.job_id=j.job_id
 group by j.job_title
 
-3.Soru:
-
+3.Soru: Her departmanda kaç kişi çalıştığını ve departman id'sini listeleyen 
 Select d.department_id, Count(*)
 from departments d, employees e
 where e.department_id=d.department_id
 group by d.department_id
 
-4.Soru:
-
+4.Soru: departmanda kaç kişi çalıştıgını ve departman adını listeleyen. 
 Select d.department_name, Count(*)
 from departments d, employees e
 where e.department_id=d.department_id
@@ -32,21 +29,18 @@ from departments d, locations l
 where l.location_id=d.location_id
 group by l.city
 
-6.Soru:
-
+6.Soru: Her şehirde çalışan kaç kişi olduğunu bulan 
 Select c.country_name, Count(*)
 from countries c, locations l
 where l.country_ıd=c.country_ıd
 group by c.country_name
 
-7.Soru:
-
+7.Soru: En düşük maaşı alan çalışanı bulan. 
 Select e.first_name, e.last_name, e.salary
 from employees e
 where e.salary=(select min(e.salary) from employees e)
 
-8.Soru:
-
+8.Soru: Her departmandan en düşük maaşa sahip çalışanları listeleyen
 Select e.first_name, e.last_name, e.salary, d.department_name
 from employees e, departments d
 where e.salary=(select min(e.salary) from employees e where e.department_id=d.department_id)
