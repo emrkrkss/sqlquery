@@ -43,10 +43,12 @@ where salary<(select avg(salary)
 
 
 Soru 5: En çok çalışanı olan job_title:
-
-
-
-
+--En çok çalışanı olan job_title:
+select  j.job_title, count(e.job_id) as çalısansayısı 
+from jobs j joın employees e on e.job_id=j.job_id 
+group by j.job_title 
+havıng count(e.job_id) = (select max(num_employees) 
+from (select job_id, count(*) as num_employees from employees group by job_id))
 
 
 
