@@ -1,0 +1,14 @@
+--Her departmanın ortalama maaşı
+select avg(e.salary), d.department_name from employees e, departments d where d.department_id=e.department_id group by d.department_name
+--En az 10 çalışanı olan meslek gruplarının adlarını soegulayan sql
+select j.job_title, count() from employees e, jobs j where e.job_id=j.job_id group by j.job_title havıng (count())>=10
+--30 nolu departmanda ortalama maaştan daha düşük maaş alan personelin adını, soyadını ve maaşını listeleyen
+select e.department_id, e.first_name, e.last_name, e.salary from employees e where e.department_id=30 group by e.department_id, e.first_name, e.last_name, e.salary havıng e.salary<(select AVG(salary) from employees)
+--Şirkette ilk işe başlayan kişinin adını, soyadı ve işe giriş tarihini listeleyen sql
+select e.first_name, e.last_name, e.hire_date from employees e where e.hire_date=(select min(hire_Date) from employees)
+--adları aynı olanları listeleme
+select e.first_name, count(*) from employees e, employees ep where e.first_name=ep.first_name and e.employee_id <> ep.employee_id group by e.first_name
+--En düşük maaşı alan işçinin hangi departmanda olduğunu ve kim olduğunu bulan programı yazınız.
+select e.first_name, e.salary, e.last_name, d.department_name from employees e, departments d where d.department_id=e.department_id group by e.first_name, e.salary, e.last_name, d.department_name HAVING salary=(select min(salary) from employees e) 
+--maaş ort en düşük olan departman
+select d.department_name from employees e, departments d where d.department_id=e.department_id group by d.department_name havıng avg(e.salary) = (select min(avg(salary)) from employees e group by e.department_id)
